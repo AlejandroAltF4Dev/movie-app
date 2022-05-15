@@ -1,0 +1,19 @@
+<ion-content>
+  <ng-container *ngIf="details$ | async as details">
+    <div class="relative">
+      <div class="absolute inset-4 flex justify-between z-20 items-center h-14">
+        <ion-back-button class="text-white bg-black/10 backdrop-blur rounded-full" defaultHref="/tabs/tab1"
+                         mode="md"></ion-back-button>
+        <!--<ion-button class="bg-black/20 backdrop-blur rounded-full" fill="clear">
+          <ion-icon class="text-white" name="arrow-back-outline"></ion-icon>
+        </ion-button>-->
+        <ion-button class="bg-black/10 backdrop-blur rounded-full" fill="clear">
+          <ion-icon class="text-white" name="play"></ion-icon>
+        </ion-button>
+
+      </div>
+      <app-cover [item]="details" [showDetailsButton]="false"></app-cover>
+    </div>
+
+  </ng-container>
+</ion-content>

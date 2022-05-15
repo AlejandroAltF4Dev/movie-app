@@ -1,0 +1,24 @@
+<div [style.background]="bgImg"
+     class="relative w-full aspect-[2/3] bg-center bg-cover">
+  <div class="absolute inset-x-0 -bottom-0.5 top-1/2 z-10 bg-gradient-to-t from-[#15141F] via-transparent">
+
+  </div>
+  <!--<img [src]="item?.backdrop_path | tmdbImage" alt=""
+       class="w-full aspect-square object-cover"
+       loading="lazy">-->
+  <div *ngIf="showDetailsButton" class="z-20 absolute bottom-4 left-6">
+    <ion-button
+      class="font-bold border border-neutral-50/10  bg-black bg-opacity-20 rounded-xl backdrop-blur text-white normal-case"
+      fill="clear">
+      <ion-icon class="mr-2 text-orange-600" name="play"></ion-icon>
+      <div class="flex flex-col items-start justify-center">
+        <span class="text-slate-300 font-normal text-xs">Play trailer</span>
+        <!--<span>{{item?.title || item?.name}}</span>-->
+      </div>
+    </ion-button>
+    <ion-button [routerLink]="['/details', item?.media_type, item?.id]" fill="clear">
+      <ion-icon class="text-white" name="information-circle-outline"></ion-icon>
+    </ion-button>
+  </div>
+
+</div>
