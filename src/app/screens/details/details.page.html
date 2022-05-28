@@ -107,7 +107,7 @@
         <div class="px-4 py-2 mb-8" *ngIf="vm.details?.images.backdrops.length">
           <h4 class="font-bold text-lg mb-2">Gallery</h4>
           <div class="flex overflow-y-auto flex-nowrap snap-x ion-text-md-center gap-4">
-            <img *ngFor="let poster of vm.details?.images.backdrops" class="aspect-video shrink-0 shadow rounded"
+            <img (click)="openImage(vm.details?.images.backdrops, index)" *ngFor="let poster of vm.details?.images.backdrops; let index = index" class="aspect-video shrink-0 shadow rounded"
                  [src]="poster.file_path | tmdbImage: 'w780'" loading="lazy"/>
           </div>
         </div>

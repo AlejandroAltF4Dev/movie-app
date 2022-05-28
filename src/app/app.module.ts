@@ -1,4 +1,4 @@
-import {NgModule} from '@angular/core';
+import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {RouteReuseStrategy} from '@angular/router';
 
@@ -19,7 +19,8 @@ import { YoutubeUrlPipe } from './services/youtube-url.pipe';
     exports: [
         ListPipe,
         YoutubeUrlPipe
-    ]
+    ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AppModule {
 }

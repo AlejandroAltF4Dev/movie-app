@@ -46,7 +46,7 @@ export class Tab1Page implements OnInit {
     const modal = await this.modalController.create({
       component: DetailsPage,
       componentProps: details,
-      /* presentingElement: this.ionRouterOutlet.nativeEl,
+     /*  presentingElement: this.ionRouterOutlet.nativeEl,
        swipeToClose: true*/
     });
     return await modal.present();
