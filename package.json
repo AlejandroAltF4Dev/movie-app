@@ -1,7 +1,7 @@
 {
   "name": "movie-app",
   "version": "0.0.1",
-  "author": "Ionic Framework",
+  "author": "ALejandro Alvarez",
   "homepage": "https://ionicframework.com/",
   "scripts": {
     "ng": "ng",
@@ -26,7 +26,7 @@
     "@capacitor/haptics": "1.1.4",
     "@capacitor/keyboard": "1.2.2",
     "@capacitor/status-bar": "1.0.8",
-    "@ionic/angular": "^6.0.0",
+    "@ionic/angular": "^6.1.7",
     "rxjs": "~6.6.0",
     "tslib": "^2.2.0",
     "zone.js": "~0.11.4"
@@ -67,5 +67,5 @@
     "ts-node": "~8.3.0",
     "typescript": "~4.4.4"
   },
-  "description": "An Ionic project"
+  "description": "Movie app using TMDB API"
 }

@@ -1,14 +1,19 @@
 <div class="px-4 py-2">
-  <h1 class="text-xl">{{sectionTitle}}</h1>
-  <div class="py-2 flex items-center flex-nowrap overflow-x-auto space-x-4 snap-x">
-    <ng-container *ngIf="items$ | async as items; else loading">
-      <img *ngFor="let item of items" [routerLink]="['/details', item.media_type, item?.id]" [src]="item?.poster_path | tmdbImage"
+  <ng-container *ngIf="items$ | async as items; else loading">
+    <h1 class="text-xl">{{sectionTitle}}</h1>
+    <div class="py-2 flex items-center flex-nowrap overflow-x-auto gap-4 snap-x">
+      <img *ngFor="let item of items" (click)="openDetails.emit({type: item?.media_type, id: item?.id})"
+           [src]="item?.poster_path | tmdbImage: 'w500'"
            alt=""
            class="w-40 aspect-[2/3] snap-start rounded"
            loading="lazy">
-    </ng-container>
-    <ng-template #loading>
-      <ion-spinner class="self-center"></ion-spinner>
-    </ng-template>
-  </div>
+    </div>
+  </ng-container>
+  <ng-template #loading>
+    <ion-skeleton-text class="w-40 h-8" [animated]="true"></ion-skeleton-text>
+    <div class="py-2 flex items-center flex-nowrap overflow-x-auto gap-4">
+      <ion-skeleton-text class="w-40 aspect-[2/3]" [animated]="true"
+                         *ngFor="let i of [1, 2, 3, 4]"></ion-skeleton-text>
+    </div>
+  </ng-template>
 </div>

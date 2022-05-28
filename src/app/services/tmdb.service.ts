@@ -47,6 +47,8 @@ export class TmdbService {
       params: new HttpParams({
         fromObject: {
           ...this.defaultParams,
+          append_to_response: 'videos,credits,images',
+          include_image_language: 'es,en,null',
         }
       })
     });

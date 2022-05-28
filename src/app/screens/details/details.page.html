@@ -1,19 +1,138 @@
-<ion-content>
-  <ng-container *ngIf="details$ | async as details">
-    <div class="relative">
-      <div class="absolute inset-4 flex justify-between z-20 items-center h-14">
-        <ion-back-button class="text-white bg-black/10 backdrop-blur rounded-full" defaultHref="/tabs/tab1"
-                         mode="md"></ion-back-button>
-        <!--<ion-button class="bg-black/20 backdrop-blur rounded-full" fill="clear">
-          <ion-icon class="text-white" name="arrow-back-outline"></ion-icon>
-        </ion-button>-->
-        <ion-button class="bg-black/10 backdrop-blur rounded-full" fill="clear">
-          <ion-icon class="text-white" name="play"></ion-icon>
-        </ion-button>
+<!--<ion-header [translucent]="true" >
+  <ion-toolbar mode="ios" class="opacity-80" >
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/" (click)="dismiss()"></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+      <ng-container *ngIf="title$ | async as title; else loadingTitle">
+        <span>{{title}}</span>
+      </ng-container>
+      <ng-template #loadingTitle>
+        <ion-skeleton-text class="w-40 h-8" [animated]="true"></ion-skeleton-text>
+      </ng-template>
+    </ion-title>
+    &lt;!&ndash;<ion-buttons slot="end">
+      <ion-button>
+        <ion-icon slot="icon-only" name="play"></ion-icon>
+      </ion-button>
+    </ion-buttons>&ndash;&gt;
+  </ion-toolbar>
+</ion-header>-->
 
+<ion-content>
+  <ng-container *ngIf="{details: details$ | async} as vm">
+    <div class="relative">
+      <div class="fixed inset-x-0 z-20">
+          <ion-toolbar class="custom-header" >
+            <ion-buttons slot="start">
+              <ion-back-button defaultHref="/" (click)="dismiss()"></ion-back-button>
+            </ion-buttons>
+            <ion-title>
+              <ng-container *ngIf="title$ | async as title; else loadingTitle">
+                <span>{{title}}</span>
+              </ng-container>
+              <ng-template #loadingTitle>
+                <ion-skeleton-text class="w-40 h-8" [animated]="true"></ion-skeleton-text>
+              </ng-template>
+            </ion-title>
+            <!--<ion-buttons slot="end">
+              <ion-button>
+                <ion-icon slot="icon-only" name="play"></ion-icon>
+              </ion-button>
+            </ion-buttons>-->
+        </ion-toolbar>
       </div>
-      <app-cover [item]="details" [showDetailsButton]="false"></app-cover>
+
+      <app-cover [item]="vm.details" [showDetails]="false"></app-cover>
+      <ng-container *ngIf="vm.details; else loading">
+        <div class="flex justify-center items-center text-gray-400 divide-x divide-gray-400 py-4">
+          <div class="flex items-center justify-center text-center gap-1 px-2">
+            <ion-icon name="calendar"></ion-icon>
+            <span>{{(vm.details?.release_date || vm.details?.first_air_date) | date: 'YYYY'}}</span>
+          </div>
+          <div class="flex items-center justify-center text-center gap-1 px-2">
+            <ion-icon name="time"></ion-icon>
+            <span>{{(vm.details?.runtime || vm.details?.episode_run_time[0]) }} Minutes</span>
+          </div>
+          <div class="flex items-center justify-center text-center gap-1 px-2">
+            <ion-icon name="film"></ion-icon>
+            <span class="">{{vm.details?.genres | list}}</span>
+          </div>
+        </div>
+        <div class="flex justify-center items-center text-orange-400 pb-2 font-bold">
+          <div class="flex items-center justify-center text-center gap-1 px-2">
+            <ion-icon name="star"></ion-icon>
+            <span>{{vm.details?.vote_average}}</span>
+          </div>
+        </div>
+        <div class="flex justify-center items-center gap-4">
+          <ion-button>
+            <ion-icon name="play" slot="start"></ion-icon>
+            Play
+          </ion-button>
+          <ion-button fill="clear">
+            <ion-icon slot="icon-only" class="text-orange-400" name="cloud-download"></ion-icon>
+          </ion-button>
+          <ion-button fill="clear">
+            <ion-icon slot="icon-only" class="text-blue-300" name="share-social"></ion-icon>
+          </ion-button>
+        </div>
+        <div class="px-4 py-2 mt-2">
+          <h4 class="font-bold text-lg mb-2">Overview</h4>
+          <p class="text-opacity-80">{{vm.details?.overview}}</p>
+        </div>
+        <div class="px-4 py-2">
+          <h4 class="font-bold text-lg mb-2">Cast</h4>
+          <div class="flex flex-nowrap items-center snap-x overflow-auto gap-4">
+            <div *ngFor="let cast of vm.details?.credits.cast" class="shrink-0 flex items-center gap-2 snap-start">
+              <img *ngIf="cast.profile_path" [src]="cast.profile_path| tmdbImage:'w185'" [alt]="cast.name"
+                   class="w-10 h-10 rounded-full object-cover">
+              <ion-icon *ngIf="!cast.profile_path" name="person-circle" class="text-3xl"></ion-icon>
+              <div class="flex flex-col text-center">
+                <span>{{cast.name}}</span>
+                <span class="text-white/50 text-xs">{{cast.character}}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="px-4 py-2" *ngIf="vm.details?.videos.results.length">
+          <h4 class="font-bold text-lg mb-2">Videos</h4>
+          <div class="flex overflow-y-auto flex-nowrap snap-x ion-text-md-center gap-4">
+            <iframe *ngFor="let video of vm.details?.videos.results | slice: 0 : 3"
+                    class="aspect-video shrink-0 shadow rounded" [src]="video.key | youtubeUrl"
+                    title="YouTube video player" frameborder="0" allow="autoplay; encrypted-media; picture-in-picture"
+                    allowfullscreen></iframe>
+          </div>
+        </div>
+        <div class="px-4 py-2 mb-8" *ngIf="vm.details?.images.backdrops.length">
+          <h4 class="font-bold text-lg mb-2">Gallery</h4>
+          <div class="flex overflow-y-auto flex-nowrap snap-x ion-text-md-center gap-4">
+            <img *ngFor="let poster of vm.details?.images.backdrops" class="aspect-video shrink-0 shadow rounded"
+                 [src]="poster.file_path | tmdbImage: 'w780'" loading="lazy"/>
+          </div>
+        </div>
+      </ng-container>
+      <ng-template #loading>
+        <div class="flex justify-center items-center text-gray-400 py-4 text-sm gap-4">
+          <ion-skeleton-text animated class="w-20 h-4 rounded"></ion-skeleton-text>
+          <ion-skeleton-text animated class="w-20 h-4 rounded"></ion-skeleton-text>
+          <ion-skeleton-text animated class="w-20 h-4 rounded"></ion-skeleton-text>
+        </div>
+        <div class="flex justify-center items-center text-orange-400 pb-2 font-bold">
+          <ion-skeleton-text animated class="w-20 h-4 rounded"></ion-skeleton-text>
+        </div>
+        <div class="flex justify-center items-center text-gray-400 py-4 text-sm gap-4">
+          <ion-skeleton-text animated class="w-20 h-6 rounded"></ion-skeleton-text>
+          <ion-skeleton-text animated class="w-20 h-6 rounded"></ion-skeleton-text>
+          <ion-skeleton-text animated class="w-20 h-6 rounded"></ion-skeleton-text>
+        </div>
+        <div class="px-4 py-2 mt-2">
+          <ion-skeleton-text animated class="w-20 h-6 rounded"></ion-skeleton-text>
+          <ion-skeleton-text animated class="w-full h-28 rounded"></ion-skeleton-text>
+        </div>
+      </ng-template>
     </div>
 
   </ng-container>
+
 </ion-content>

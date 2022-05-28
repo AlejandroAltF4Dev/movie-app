@@ -18,9 +18,10 @@ import {CarouselComponent} from './components/carousel/carousel.component';
     ExploreContainerComponentModule,
     Tab1PageRoutingModule,
   ],
-  exports: [
-    CoverComponent
-  ],
+    exports: [
+        CoverComponent,
+        TmdbImagePipe
+    ],
   declarations: [Tab1Page, TmdbImagePipe, CoverComponent, CarouselComponent]
 })
 export class Tab1PageModule {

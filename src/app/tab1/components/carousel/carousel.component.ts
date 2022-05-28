@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Observable} from 'rxjs';
 
 @Component({
@@ -9,6 +9,7 @@ import {Observable} from 'rxjs';
 export class CarouselComponent implements OnInit {
   @Input() items$: Observable<any>;
   @Input() sectionTitle: string;
+  @Output() openDetails = new EventEmitter();
 
   constructor() {
   }

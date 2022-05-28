@@ -8,15 +8,17 @@ import {DetailsPageRoutingModule} from './details-routing.module';
 
 import {DetailsPage} from './details.page';
 import {Tab1PageModule} from '../../tab1/tab1.module';
+import {AppModule} from "../../app.module";
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    DetailsPageRoutingModule,
-    Tab1PageModule
-  ],
+    imports: [
+        CommonModule,
+        FormsModule,
+        IonicModule,
+        DetailsPageRoutingModule,
+        Tab1PageModule,
+        AppModule
+    ],
   declarations: [DetailsPage]
 })
 export class DetailsPageModule {
