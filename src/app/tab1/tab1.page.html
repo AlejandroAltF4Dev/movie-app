@@ -5,7 +5,7 @@
         <span class="text-orange-600">Stream</span> Everywhere
       </h1>
     </div>-->
-    <app-cover [item]="mainMovie" (openDetails)="openDetails($event)"></app-cover>
+    <app-cover [item]="mainMovie" (openDetails)="openDetails($event)" (openPremium)="openPremiumModal()"></app-cover>
     <app-carousel [items$]="trendingMovies$"  (openDetails)="openDetails($event)" sectionTitle="Trending movies"></app-carousel>
     <app-carousel [items$]="trendingTv$"  (openDetails)="openDetails($event)" sectionTitle="Trending TV shows"></app-carousel>
   </div>

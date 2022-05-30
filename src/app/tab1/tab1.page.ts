@@ -1,9 +1,10 @@
-import {Component, OnInit} from '@angular/core';
-import {TmdbService} from '../services/tmdb.service';
-import {delay, map} from 'rxjs/operators';
-import {Observable} from 'rxjs';
-import {IonRouterOutlet, ModalController} from '@ionic/angular';
-import {DetailsPage} from "../screens/details/details.page";
+import { Component, OnInit } from '@angular/core';
+import { TmdbService } from '../services/tmdb.service';
+import { delay, map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { IonRouterOutlet, ModalController } from '@ionic/angular';
+import { DetailsPage } from '../screens/details/details.page';
+import { PremiumPage } from '../screens/premium/premium.page';
 
 @Component({
   selector: 'app-tab1',
@@ -20,8 +21,7 @@ export class Tab1Page implements OnInit {
     private tmdbService: TmdbService,
     public modalController: ModalController,
     private ionRouterOutlet: IonRouterOutlet
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
     this.categories$ = this.tmdbService.movieCategories();
@@ -34,22 +34,29 @@ export class Tab1Page implements OnInit {
         return movies;
       })
     );
-    this.trendingTv$ = this.tmdbService.trending('tv').pipe(
+    this.trendingTv$ = this.tmdbService
+      .trending('tv')
+      .pipe
       /*
             delay(3000)
       */
-    );
+      ();
   }
 
-
-  async openDetails(details: { type: 'movie' | 'tv', id: string }) {
+  async openDetails(details: { type: 'movie' | 'tv'; id: string }) {
     const modal = await this.modalController.create({
       component: DetailsPage,
       componentProps: details,
-     /*  presentingElement: this.ionRouterOutlet.nativeEl,
+      /*  presentingElement: this.ionRouterOutlet.nativeEl,
        swipeToClose: true*/
     });
     return await modal.present();
+  }
 
+  async openPremiumModal() {
+    const modal = await this.modalController.create({
+      component: PremiumPage,
+    });
+    return await modal.present();
   }
 }

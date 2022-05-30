@@ -12,6 +12,7 @@ export class CoverComponent implements OnInit {
   @Input() item: any;
   @Input() showDetails = true;
   @Output() openDetails = new EventEmitter();
+  @Output() openPremium = new EventEmitter();
 
   constructor(
     private sanitizer: DomSanitizer,

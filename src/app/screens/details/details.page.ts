@@ -7,6 +7,7 @@ import { IonModal, ModalController } from '@ionic/angular';
 import { PhotoViewerComponent } from '../../photo-viewer/photo-viewer/photo-viewer.component';
 import { TmdbImagePipe } from '../../services/tmdb-image.pipe';
 import { PeopleDetailsPage } from '../people-details/people-details.page';
+import { PremiumPage } from '../premium/premium.page';
 
 @Component({
   selector: 'app-details',
@@ -62,6 +63,13 @@ export class DetailsPage implements OnInit {
       componentProps: {
         personId: cast.id,
       },
+    });
+    return modal.present();
+  }
+
+  async openPremiumModal() {
+    const modal = await this.modalController.create({
+      component: PremiumPage,
     });
     return modal.present();
   }

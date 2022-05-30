@@ -12,6 +12,10 @@ const routes: Routes = [
   },  {
     path: 'people-details',
     loadChildren: () => import('./screens/people-details/people-details.module').then( m => m.PeopleDetailsPageModule)
+  },
+  {
+    path: 'premium',
+    loadChildren: () => import('./screens/premium/premium.module').then( m => m.PremiumPageModule)
   }
 
 ];
