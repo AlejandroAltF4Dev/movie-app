@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { TmdbService } from '../../services/tmdb.service';
 import { Observable } from 'rxjs';
-import { map, shareReplay } from 'rxjs/operators';
+import { delay, map, shareReplay } from 'rxjs/operators';
 import { IonModal, ModalController } from '@ionic/angular';
 import { PhotoViewerComponent } from '../../photo-viewer/photo-viewer/photo-viewer.component';
 import { TmdbImagePipe } from '../../services/tmdb-image.pipe';

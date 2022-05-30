@@ -1,0 +1,43 @@
+<ion-header>
+  <ion-toolbar class="custom-header">
+
+    <ion-title>VIP</ion-title>
+    <ion-buttons slot="end">
+             <ion-button (click)="dismiss()">
+               <ion-icon slot="icon-only" name="close"></ion-icon>
+             </ion-button>
+           </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div class="flex flex-col gap-8">
+    <ion-text class="self-center text-white mt-4 bg-orange-400 px-4 rounded-full">Access Premium</ion-text>
+    <ion-text class="text-center">The latest movies and <br> series are here</ion-text>
+    <form class="grid grid-cols-2 gap-4 h-40 self-stretch" [formGroup]="form">
+      <label for="option1" [ngClass]="{'bg-blue-400': form.get('type').value === 'monthly'}" class="rounded-2xl border-[0.5px] flex flex-col items-center gap-8 justify-center text-center">
+        <ion-text class="font-bold">Monthly <br>Subscription</ion-text>
+        <ion-text class="font-bold">{{100 | currency}}/<br><span class="text-xs">Month</span></ion-text>
+
+        <input type="radio" value="monthly" id="option1" hidden formControlName="type">
+      </label>
+      <label for="option2" [ngClass]="{'bg-blue-400': form.get('type').value === 'yearly'}" class="rounded-2xl border-[0.5px] flex flex-col items-center gap-8 justify-center text-center">
+        <ion-text class="font-bold">Annual <br>Subscription</ion-text>
+        <ion-text class="font-bold">{{400 | currency}}/<br><span class="text-xs">Year</span></ion-text>
+        <input type="radio" value="yearly" id="option2" hidden formControlName="type">
+      </label>
+    </form>
+    <div class="grid grid-cols-2 gap-4">
+      <ng-container *ngFor="let item of items">
+        <div class="flex items-center gap-2 justify-center">
+          <ion-icon [name]="item.icon" class="text-2xl"></ion-icon>
+          <ion-text class="text-sm">{{item.text}}</ion-text>
+        </div>
+      </ng-container>
+    </div>
+    <ion-button expand="block" shape="round" class="mt-8">
+      Payment Method
+    </ion-button>
+   <ion-text class="self-center">Already subscribed? <a href="" class="text-blue-400">Login</a></ion-text>
+  </div>
+</ion-content>
