@@ -1,0 +1,86 @@
+<ion-content>
+  <ng-container *ngIf="{details: details$ | async} as vm">
+    <div class="relative">
+      <div class="fixed inset-x-0 z-20">
+        <ion-toolbar class="custom-header" >
+          <ion-buttons slot="start">
+            <ion-back-button defaultHref="/" (click)="dismiss()"></ion-back-button>
+          </ion-buttons>
+          <ion-title>
+            <ng-container *ngIf="name$ | async as name; else loadingTitle">
+              <span>{{name}}</span>
+            </ng-container>
+            <ng-template #loadingTitle>
+              <ion-skeleton-text class="w-40 h-8" [animated]="true"></ion-skeleton-text>
+            </ng-template>
+          </ion-title>
+        </ion-toolbar>
+      </div>
+
+      <ng-container>
+        <div class="relative">
+          <img [src]="vm.details?.profile_path | tmdbImage" alt="">
+          <div class="absolute inset-x-0 -bottom-0.5 top-1/2 z-10 bg-gradient-to-t from-[#15141F] via-transparent"></div>
+
+        </div>
+        <div class="flex justify-center items-center text-gray-400 divide-x divide-gray-400 py-4">
+          <div class="flex items-center justify-center text-center gap-1 px-2">
+            <ion-icon name="calendar"></ion-icon>
+            <span>{{(vm.details?.birthday) | date: 'dd/MM/YYYY'}}</span>
+          </div>
+          <div class="flex items-center justify-center text-center gap-1 px-2">
+            <ion-icon name="location"></ion-icon>
+            <span>{{vm.details?.place_of_birth  }}</span>
+          </div>
+        </div>
+
+        <div class="px-4 py-2 mt-2">
+          <h4 class="font-bold text-lg mb-2">Biography</h4>
+          <p class="text-opacity-80" [ngClass]="{'line-clamp-3': !opened}">{{vm.details?.biography}}</p>
+          <ion-button expand="block" fill="clear" (click)="opened = !opened">
+            <span>{{opened ? 'See less' : 'See more'}}</span>
+            <ion-icon [name]="opened ? 'chevron-up' : 'chevron-down'" slot="end"></ion-icon>
+          </ion-button>
+        </div>
+        <div class="px-4 py-2 mb-8" *ngIf="vm.details?.images.profiles.length">
+          <h4 class="font-bold text-lg mb-2">Gallery</h4>
+          <div class="flex overflow-y-auto flex-nowrap snap-x ion-text-md-center gap-4">
+            <ion-img (click)="openImage(vm.details?.images.profiles, index)" *ngFor="let poster of vm.details?.images.profiles; let index = index" class="aspect-[2/3] shrink-0 shadow rounded"
+                     [src]="poster.file_path | tmdbImage: 'w185'"></ion-img>
+          </div>
+        </div>
+        <div class="px-4 py-2 mb-8" *ngIf="vm.details?.credits.cast.length">
+          <h4 class="font-bold text-lg mb-2">Works</h4>
+          <div class="flex overflow-y-auto flex-nowrap snap-x ion-text-md-center gap-4">
+            <ng-container *ngFor="let work of vm.details?.credits.cast; let index = index">
+              <ion-img (click)="openDetails({type: 'movie', id: work.id })" *ngIf="work?.poster_path"  class="aspect-[2/3] shrink-0 shadow rounded"
+                        [src]="work?.poster_path | tmdbImage: 'w185'"></ion-img>
+            </ng-container>
+
+          </div>
+        </div>
+      </ng-container>
+      <ng-template #loading>
+        <div class="flex justify-center items-center text-gray-400 py-4 text-sm gap-4">
+          <ion-skeleton-text animated class="w-20 h-4 rounded"></ion-skeleton-text>
+          <ion-skeleton-text animated class="w-20 h-4 rounded"></ion-skeleton-text>
+          <ion-skeleton-text animated class="w-20 h-4 rounded"></ion-skeleton-text>
+        </div>
+        <div class="flex justify-center items-center text-orange-400 pb-2 font-bold">
+          <ion-skeleton-text animated class="w-20 h-4 rounded"></ion-skeleton-text>
+        </div>
+        <div class="flex justify-center items-center text-gray-400 py-4 text-sm gap-4">
+          <ion-skeleton-text animated class="w-20 h-6 rounded"></ion-skeleton-text>
+          <ion-skeleton-text animated class="w-20 h-6 rounded"></ion-skeleton-text>
+          <ion-skeleton-text animated class="w-20 h-6 rounded"></ion-skeleton-text>
+        </div>
+        <div class="px-4 py-2 mt-2">
+          <ion-skeleton-text animated class="w-20 h-6 rounded"></ion-skeleton-text>
+          <ion-skeleton-text animated class="w-full h-28 rounded"></ion-skeleton-text>
+        </div>
+      </ng-template>
+    </div>
+
+  </ng-container>
+
+</ion-content>

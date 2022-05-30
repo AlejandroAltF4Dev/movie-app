@@ -30,3 +30,9 @@
 html {
   font-family: 'Lato', sans-serif;
 }
+
+.custom-header{
+  --background: var(--dark-background);
+  --opacity: .5;
+  @apply backdrop-blur;
+}

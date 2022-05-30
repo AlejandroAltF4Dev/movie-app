@@ -1,24 +1,3 @@
-<!--<ion-header [translucent]="true" >
-  <ion-toolbar mode="ios" class="opacity-80" >
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="/" (click)="dismiss()"></ion-back-button>
-    </ion-buttons>
-    <ion-title>
-      <ng-container *ngIf="title$ | async as title; else loadingTitle">
-        <span>{{title}}</span>
-      </ng-container>
-      <ng-template #loadingTitle>
-        <ion-skeleton-text class="w-40 h-8" [animated]="true"></ion-skeleton-text>
-      </ng-template>
-    </ion-title>
-    &lt;!&ndash;<ion-buttons slot="end">
-      <ion-button>
-        <ion-icon slot="icon-only" name="play"></ion-icon>
-      </ion-button>
-    </ion-buttons>&ndash;&gt;
-  </ion-toolbar>
-</ion-header>-->
-
 <ion-content>
   <ng-container *ngIf="{details: details$ | async} as vm">
     <div class="relative">
@@ -79,12 +58,16 @@
         </div>
         <div class="px-4 py-2 mt-2">
           <h4 class="font-bold text-lg mb-2">Overview</h4>
-          <p class="text-opacity-80">{{vm.details?.overview}}</p>
+          <p class="text-opacity-80" [ngClass]="{'line-clamp-3': !opened}">{{vm.details?.overview}}</p>
+          <ion-button expand="block" fill="clear" (click)="opened = !opened">
+            <span>{{opened ? 'See less' : 'See more'}}</span>
+            <ion-icon [name]="opened ? 'chevron-up' : 'chevron-down'" slot="end"></ion-icon>
+          </ion-button>
         </div>
         <div class="px-4 py-2">
           <h4 class="font-bold text-lg mb-2">Cast</h4>
           <div class="flex flex-nowrap items-center snap-x overflow-auto gap-4">
-            <div *ngFor="let cast of vm.details?.credits.cast" class="shrink-0 flex items-center gap-2 snap-start">
+            <div *ngFor="let cast of vm.details?.credits.cast" class="shrink-0 flex items-center gap-2 snap-start" (click)="openPersonDetails(cast)">
               <img *ngIf="cast.profile_path" [src]="cast.profile_path| tmdbImage:'w185'" [alt]="cast.name"
                    class="w-10 h-10 rounded-full object-cover">
               <ion-icon *ngIf="!cast.profile_path" name="person-circle" class="text-3xl"></ion-icon>
