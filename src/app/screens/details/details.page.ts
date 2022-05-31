@@ -2,39 +2,35 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { TmdbService } from '../../services/tmdb.service';
-import { delay, map, shareReplay, switchMap } from 'rxjs/operators';
 import { IonModal, ModalController } from '@ionic/angular';
 import { PhotoViewerComponent } from '../../photo-viewer/photo-viewer/photo-viewer.component';
 import { TmdbImagePipe } from '../../services/tmdb-image.pipe';
 import { PeopleDetailsPage } from '../people-details/people-details.page';
 import { PremiumPage } from '../premium/premium.page';
+import { DetailsStore } from './details.store';
 
 @Component({
   selector: 'app-details',
   templateUrl: './details.page.html',
   styleUrls: ['./details.page.scss'],
-  providers: [TmdbImagePipe],
+  providers: [TmdbImagePipe, DetailsStore],
 })
 export class DetailsPage implements OnInit {
   @Input() id: string;
   @Input() type: string;
-  title$: Observable<any>;
-  details$: Observable<any>;
   modal: IonModal;
   opened = false;
 
   constructor(
     private route: ActivatedRoute,
+    public detailsStore: DetailsStore,
     private tmdbService: TmdbService,
     private modalController: ModalController,
     private tmdbImagePipe: TmdbImagePipe
   ) {}
 
   ngOnInit() {
-    this.details$ = this.tmdbService
-      .details(this.type, this.id)
-      .pipe(shareReplay(1));
-    this.title$ = this.details$.pipe(map((item) => item.title || item.name));
+    this.detailsStore.getDetails({ type: this.type, id: this.id });
   }
 
   async dismiss() {

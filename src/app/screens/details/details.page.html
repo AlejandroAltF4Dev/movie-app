@@ -1,5 +1,5 @@
 <ion-content>
-  <ng-container *ngIf="{details: details$ | async} as vm">
+  <ng-container *ngIf="{details: detailsStore.details$ | async} as vm">
     <div class="relative">
       <div class="fixed inset-x-0 z-20">
           <ion-toolbar class="custom-header" >
@@ -7,7 +7,7 @@
               <ion-back-button defaultHref="/" (click)="dismiss()"></ion-back-button>
             </ion-buttons>
             <ion-title>
-              <ng-container *ngIf="title$ | async as title; else loadingTitle">
+              <ng-container *ngIf="detailsStore.title$ | async as title; else loadingTitle">
                 <span>{{title}}</span>
               </ng-container>
               <ng-template #loadingTitle>
