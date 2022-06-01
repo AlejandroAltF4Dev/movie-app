@@ -7,9 +7,9 @@
     <ion-text>
       <p class="mb-8 text-slate-500">Enter your registered<br>Phone Number to Sign Up</p>
     </ion-text>
-    <ion-button expand="block" class="normal-case mb-6">Sign Up</ion-button>
+    <ion-button expand="block" class="normal-case mb-6" (click)="openModal('signup')">Sign Up</ion-button>
     <p class="mb-6">I already have an account?
-      <ion-text color="primary"><a href="">Login</a></ion-text>
+      <ion-text color="primary"><a (click)="openModal('login')">Login</a></ion-text>
     </p>
     <div class="flex gap-2 items-center self-center">
       <div class="h-[2px] w-20 bg-gray-700"></div>

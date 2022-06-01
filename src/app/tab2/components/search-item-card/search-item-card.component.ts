@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { DetailsPage } from '../../../screens/details/details.page';
+import { PeopleDetailsPage } from '../../../screens/people-details/people-details.page';
 
 @Component({
   selector: 'app-search-item-card',
@@ -14,12 +15,13 @@ export class SearchItemCardComponent implements OnInit {
   ngOnInit() {}
 
   async openDetails(item: any) {
+    const componentProps = {
+      type: item.media_type,
+      [item.media_type === 'person' ? 'personId' : 'id']: item.id,
+    };
     const modal = await this.modalController.create({
-      component: DetailsPage,
-      componentProps: {
-        type: item.media_type,
-        id: item.id,
-      },
+      component: item.media_type === 'person' ? PeopleDetailsPage : DetailsPage,
+      componentProps,
     });
     return modal.present();
   }

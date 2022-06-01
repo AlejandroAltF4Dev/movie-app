@@ -1,0 +1,44 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Sign Up</ion-title>
+    <ion-buttons slot="end">
+      <ion-button fill="clear" (click)="dismiss()">
+        <ion-icon name="close" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding">
+  <div class="flex flex-col h-full justify-center gap-4">
+    <ion-text color="primary">
+      <h1 class="text-3xl text-center">Let's get started</h1>
+    </ion-text>
+    <ion-text>
+      <p class="text-gray-500 text-center">The latest movies and series<br> are here</p>
+    </ion-text>
+    <div class="flex flex-col gap-8 my-8">
+      <ion-item shape="round">
+        <ion-label position="fixed">Full Name</ion-label>
+        <ion-input></ion-input>
+      </ion-item>
+      <ion-item shape="round">
+        <ion-label position="fixed">Email Address</ion-label>
+        <ion-input></ion-input>
+      </ion-item>
+      <ion-item shape="round">
+        <ion-label position="fixed">Password</ion-label>
+        <ion-input></ion-input>
+        <ion-button slot="end" fill="clear">
+          <ion-icon name="eye" slot="icon-only"></ion-icon>
+        </ion-button>
+      </ion-item>
+      <ion-item shape="round">
+        <ion-checkbox slot="start"></ion-checkbox>
+        <ion-label>I agree to the <ion-text color="primary">Terms and Services</ion-text> and <ion-text color="primary">Privacy Policy</ion-text></ion-label>
+      </ion-item>
+      <ion-button expand="block" class="normal-case">
+        Sign Up
+      </ion-button>
+    </div>
+  </div>
+</ion-content>
