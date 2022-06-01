@@ -50,4 +50,17 @@ export class TmdbService {
       }),
     });
   }
+
+  search(query: string) {
+    return this.http.get<{ results: any[] }>(`${this.endpoint}/search/multi`, {
+      params: new HttpParams({
+        fromObject: {
+          ...this.defaultParams,
+          /*append_to_response: 'videos,credits,images',
+          include_image_language: 'es,en,null',*/
+          query,
+        },
+      }),
+    });
+  }
 }

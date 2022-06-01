@@ -3,9 +3,7 @@
     <div class="relative">
       <div class="fixed inset-x-0 z-20">
         <ion-toolbar class="custom-header">
-          <ion-buttons slot="start">
-            <ion-back-button defaultHref="/" (click)="dismiss()"></ion-back-button>
-          </ion-buttons>
+
           <ion-title>
             <ng-container *ngIf="detailsStore.title$ | async as title; else loadingTitle">
               <span>{{title}}</span>
@@ -14,6 +12,11 @@
               <ion-skeleton-text class="w-40 h-8" [animated]="true"></ion-skeleton-text>
             </ng-template>
           </ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="dismiss()">
+              <ion-icon name="close" slot="icon-only"></ion-icon>
+            </ion-button>
+          </ion-buttons>
         </ion-toolbar>
       </div>
 
@@ -29,7 +32,7 @@
           </div>
           <div class="flex items-center justify-center text-center gap-1 px-2">
             <ion-icon name="time"></ion-icon>
-            <span>{{type === 'movie' ? vm.details?.runtime + 'Minutes' || 'N/A' : vm.details?.episode_run_time.length && vm.details?.episode_run_time[0] + ' Min' || 'N/A' }} </span>
+            <span>{{type === 'movie' ? vm.details?.runtime && vm.details?.runtime + 'Min' || 'N/A' : vm.details?.episode_run_time.length && vm.details?.episode_run_time[0] + ' Min' || 'N/A' }} </span>
           </div>
           <div class="flex items-center justify-center text-center gap-1 px-2">
             <ion-icon name="film"></ion-icon>

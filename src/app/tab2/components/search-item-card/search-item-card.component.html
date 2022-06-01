@@ -1,0 +1,22 @@
+<ng-container [ngSwitch]="item.media_type">
+  <div *ngSwitchCase="'person'" class="flex flex-col items-center justify-center aspect-[2/3] shadow-2xl rounded overflow-hidden text-center" (click)="openDetails(item)">
+    <ion-img *ngIf="item.profile_path" [src]="item.profile_path | tmdbImage: ''"></ion-img>
+    <ion-icon *ngIf="!item.profile_path" name="person" class="text-6xl"></ion-icon>
+    <ion-text>{{item.name}}</ion-text>
+    <ion-text class="text-opacity-50 font-bold">{{item.known_for_department}}</ion-text>
+  </div>
+  <div *ngSwitchCase="'movie'" class="aspect-[2/3] shadow-2xl rounded overflow-hidden flex flex-col items-center justify-center text-center" (click)="openDetails(item)">
+    <ion-img *ngIf="item.poster_path" [src]="item.poster_path | tmdbImage: ''" ></ion-img>
+    <ng-container *ngIf="!item.poster_path">
+      <ion-icon name="film" class="text-6xl"></ion-icon>
+      <ion-text>{{item.title  || item.name}}</ion-text>
+    </ng-container>
+  </div>
+  <div *ngSwitchCase="'tv'" class="aspect-[2/3] shadow-2xl rounded overflow-hidden flex flex-col items-center justify-center text-center" (click)="openDetails(item)">
+    <ion-img  *ngIf="item.poster_path" [src]="item.poster_path | tmdbImage: ''" ></ion-img>
+    <ng-container *ngIf="!item.poster_path">
+      <ion-icon name="tv" class="text-6xl"></ion-icon>
+      <ion-text>{{item.title || item.name}}</ion-text>
+    </ng-container>
+  </div>
+</ng-container>

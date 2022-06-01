@@ -3,9 +3,6 @@
     <div class="relative">
       <div class="fixed inset-x-0 z-20">
         <ion-toolbar class="custom-header" >
-          <ion-buttons slot="start">
-            <ion-back-button defaultHref="/" (click)="dismiss()"></ion-back-button>
-          </ion-buttons>
           <ion-title>
             <ng-container *ngIf="detailsStore.title$ | async as name; else loadingTitle">
               <span>{{name}}</span>
@@ -14,6 +11,11 @@
               <ion-skeleton-text class="w-40 h-8" [animated]="true"></ion-skeleton-text>
             </ng-template>
           </ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="dismiss()">
+              <ion-icon name="close" slot="icon-only"></ion-icon>
+            </ion-button>
+          </ion-buttons>
         </ion-toolbar>
       </div>
 

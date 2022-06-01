@@ -1,11 +1,23 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Tab 2
-    </ion-title>
-  </ion-toolbar>
+  <ion-searchbar animated enterkeyhint="search" inputmode="search" (ionChange)="search($event)"
+                 type="name"></ion-searchbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <app-photo-viewer></app-photo-viewer>
+<ion-content [fullscreen]="true" class="ion-padding">
+  <ng-container *ngIf="{results: searchStore.results$ | async} as vm">
+    <ng-container *ngIf="vm.results; else placeholder">
+      <div class="grid grid-cols-2 gap-4">
+        <ion-text class="col-span-2" color="primary">Results:</ion-text>
+        <ng-container *ngFor="let item of vm.results">
+         <app-search-item-card [item]="item"></app-search-item-card>
+        </ng-container>
+      </div>
+    </ng-container>
+    <ng-template #placeholder>
+      <div class="flex flex-col justify-center h-full items-center opacity-50 ">
+        <ion-icon name="search-circle" class="text-6xl"></ion-icon>
+        <ion-text class="text-4xl">Search</ion-text>
+      </div>
+    </ng-template>
+  </ng-container>
 </ion-content>
