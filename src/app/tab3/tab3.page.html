@@ -1,17 +1,33 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Tab 3
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content [fullscreen]="true" class="ion-padding">
+  <div class="flex flex-col text-center justify-center h-full">
+    <ion-icon name="tv-outline" color="primary" class="text-6xl mb-6 self-center"></ion-icon>
+    <ion-text>
+      <h1 class="text-2xl mb-4">MOVIEMAX</h1>
+    </ion-text>
+    <ion-text>
+      <p class="mb-8 text-slate-500">Enter your registered<br>Phone Number to Sign Up</p>
+    </ion-text>
+    <ion-button expand="block" class="normal-case mb-6">Sign Up</ion-button>
+    <p class="mb-6">I already have an account?
+      <ion-text color="primary"><a href="">Login</a></ion-text>
+    </p>
+    <div class="flex gap-2 items-center self-center">
+      <div class="h-[2px] w-20 bg-gray-700"></div>
+      <p class="my-4">Or Sign up with</p>
+      <div class="h-[2px] w-20 bg-gray-700"></div>
+    </div>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 3</ion-title>
-    </ion-toolbar>
-  </ion-header>
+    <div class="grid grid-cols-3">
+      <ion-button fill="clear">
+        <ion-icon name="logo-google" slot="icon-only"></ion-icon>
+      </ion-button>
+      <ion-button fill="clear">
+        <ion-icon name="logo-apple" slot="icon-only"></ion-icon>
+      </ion-button>
+      <ion-button fill="clear">
+        <ion-icon name="logo-facebook" slot="icon-only"></ion-icon>
+      </ion-button>
 
-  <app-explore-container name="Tab 3 page"></app-explore-container>
+    </div>
+  </div>
 </ion-content>
