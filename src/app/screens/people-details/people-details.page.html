@@ -1,5 +1,5 @@
 <ion-content>
-  <ng-container *ngIf="{details: details$ | async} as vm">
+  <ng-container *ngIf="{details: detailsStore.details$ | async} as vm">
     <div class="relative">
       <div class="fixed inset-x-0 z-20">
         <ion-toolbar class="custom-header" >
@@ -7,7 +7,7 @@
             <ion-back-button defaultHref="/" (click)="dismiss()"></ion-back-button>
           </ion-buttons>
           <ion-title>
-            <ng-container *ngIf="name$ | async as name; else loadingTitle">
+            <ng-container *ngIf="detailsStore.title$ | async as name; else loadingTitle">
               <span>{{name}}</span>
             </ng-container>
             <ng-template #loadingTitle>
@@ -36,10 +36,10 @@
 
         <div class="px-4 py-2 mt-2">
           <h4 class="font-bold text-lg mb-2">Biography</h4>
-          <p class="text-opacity-80" [ngClass]="{'line-clamp-3': !opened}">{{vm.details?.biography}}</p>
-          <ion-button expand="block" fill="clear" (click)="opened = !opened">
-            <span>{{opened ? 'See less' : 'See more'}}</span>
-            <ion-icon [name]="opened ? 'chevron-up' : 'chevron-down'" slot="end"></ion-icon>
+          <p class="text-opacity-80" [ngClass]="{'line-clamp-3': (detailsStore.opened$ | async)  === false}">{{vm.details?.biography}}</p>
+          <ion-button expand="block" fill="clear" (click)="detailsStore.toggleOpened()">
+            <span>{{(detailsStore.opened$ | async)  === true ? 'See less' : 'See more'}}</span>
+            <ion-icon [name]="(detailsStore.opened$ | async)  === true ? 'chevron-up' : 'chevron-down'" slot="end"></ion-icon>
           </ion-button>
         </div>
         <div class="px-4 py-2 mb-8" *ngIf="vm.details?.images.profiles.length">

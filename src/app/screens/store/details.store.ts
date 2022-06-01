@@ -7,18 +7,26 @@ import { HttpErrorResponse } from '@angular/common/http';
 
 export interface DetailsState {
   details: any;
+  opened: boolean;
 }
 
 @Injectable()
 export class DetailsStore extends ComponentStore<DetailsState> {
   readonly details$ = this.select((state) => state.details);
+  readonly opened$ = this.select((state) => state.opened);
   readonly title$ = this.details$.pipe(
     filter((details) => !!details),
     map((details) => details.title || details.name)
   );
 
   readonly setDetails = this.updater((state, details: any) => ({
+    ...state,
     details,
+  }));
+
+  readonly toggleOpened = this.updater((state, details: any) => ({
+    ...state,
+    opened: !state.opened,
   }));
 
   readonly getDetails = this.effect(
@@ -39,6 +47,7 @@ export class DetailsStore extends ComponentStore<DetailsState> {
   constructor(private tmdbService: TmdbService) {
     super({
       details: null,
+      opened: false,
     });
   }
 }

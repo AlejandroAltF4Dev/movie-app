@@ -1,7 +1,7 @@
 <div class="flex flex-col">
   <ng-container *ngIf="item; else loading">
     <div [style.background]="bgImg"
-         class="relative w-full aspect-[2/3] bg-center bg-cover">
+         class="relative w-full aspect-square bg-center bg-cover">
       <div class="absolute inset-x-0 -bottom-0.5 top-1/2 z-10 bg-gradient-to-t from-[#15141F] via-transparent"></div>
       <div *ngIf="showDetails" class="z-20 absolute bottom-4 left-6">
         <ion-button

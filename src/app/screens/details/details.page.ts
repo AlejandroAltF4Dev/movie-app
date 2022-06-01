@@ -7,7 +7,7 @@ import { PhotoViewerComponent } from '../../photo-viewer/photo-viewer/photo-view
 import { TmdbImagePipe } from '../../services/tmdb-image.pipe';
 import { PeopleDetailsPage } from '../people-details/people-details.page';
 import { PremiumPage } from '../premium/premium.page';
-import { DetailsStore } from './details.store';
+import { DetailsStore } from '../store/details.store';
 
 @Component({
   selector: 'app-details',
@@ -19,7 +19,6 @@ export class DetailsPage implements OnInit {
   @Input() id: string;
   @Input() type: string;
   modal: IonModal;
-  opened = false;
 
   constructor(
     private route: ActivatedRoute,

@@ -1,35 +1,29 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { TmdbService } from '../../services/tmdb.service';
-import { Observable } from 'rxjs';
-import { delay, map, shareReplay } from 'rxjs/operators';
 import { IonModal, ModalController } from '@ionic/angular';
 import { PhotoViewerComponent } from '../../photo-viewer/photo-viewer/photo-viewer.component';
 import { TmdbImagePipe } from '../../services/tmdb-image.pipe';
 import { DetailsPage } from '../details/details.page';
+import { DetailsStore } from '../store/details.store';
 
 @Component({
   selector: 'app-people-details',
   templateUrl: './people-details.page.html',
   styleUrls: ['./people-details.page.scss'],
-  providers: [TmdbImagePipe],
+  providers: [TmdbImagePipe, DetailsStore],
 })
 export class PeopleDetailsPage implements OnInit {
   @Input() personId: any;
-  details$: Observable<any>;
-  name$: Observable<any>;
   modal: IonModal;
-  opened = false;
   constructor(
     private tmdbService: TmdbService,
     private modalController: ModalController,
+    public detailsStore: DetailsStore,
     private tmdbImagePipe: TmdbImagePipe
   ) {}
 
   ngOnInit() {
-    this.details$ = this.tmdbService
-      .details('person', this.personId)
-      .pipe(shareReplay(1));
-    this.name$ = this.details$.pipe(map((item) => item.title || item.name));
+    this.detailsStore.getDetails({ type: 'person', id: this.personId });
   }
   async dismiss() {
     await this.modal.dismiss();

@@ -2,28 +2,26 @@
   <ng-container *ngIf="{details: detailsStore.details$ | async} as vm">
     <div class="relative">
       <div class="fixed inset-x-0 z-20">
-          <ion-toolbar class="custom-header" >
-            <ion-buttons slot="start">
-              <ion-back-button defaultHref="/" (click)="dismiss()"></ion-back-button>
-            </ion-buttons>
-            <ion-title>
-              <ng-container *ngIf="detailsStore.title$ | async as title; else loadingTitle">
-                <span>{{title}}</span>
-              </ng-container>
-              <ng-template #loadingTitle>
-                <ion-skeleton-text class="w-40 h-8" [animated]="true"></ion-skeleton-text>
-              </ng-template>
-            </ion-title>
-            <!--<ion-buttons slot="end">
-              <ion-button>
-                <ion-icon slot="icon-only" name="play"></ion-icon>
-              </ion-button>
-            </ion-buttons>-->
+        <ion-toolbar class="custom-header">
+          <ion-buttons slot="start">
+            <ion-back-button defaultHref="/" (click)="dismiss()"></ion-back-button>
+          </ion-buttons>
+          <ion-title>
+            <ng-container *ngIf="detailsStore.title$ | async as title; else loadingTitle">
+              <span>{{title}}</span>
+            </ng-container>
+            <ng-template #loadingTitle>
+              <ion-skeleton-text class="w-40 h-8" [animated]="true"></ion-skeleton-text>
+            </ng-template>
+          </ion-title>
         </ion-toolbar>
       </div>
 
       <app-cover [item]="vm.details" [showDetails]="false"></app-cover>
       <ng-container *ngIf="vm.details; else loading">
+        <div class="ion-padding" *ngIf="vm.details.images.logos.length">
+          <ion-img [src]="vm.details.images.logos[0].file_path | tmdbImage" class="aspect-video"></ion-img>
+        </div>
         <div class="flex justify-center items-center text-gray-400 divide-x divide-gray-400 py-4">
           <div class="flex items-center justify-center text-center gap-1 px-2">
             <ion-icon name="calendar"></ion-icon>
@@ -31,7 +29,7 @@
           </div>
           <div class="flex items-center justify-center text-center gap-1 px-2">
             <ion-icon name="time"></ion-icon>
-            <span>{{(vm.details?.runtime || vm.details?.episode_run_time[0]) }} Minutes</span>
+            <span>{{type === 'movie' ? vm.details?.runtime + 'Minutes' || 'N/A' : vm.details?.episode_run_time.length && vm.details?.episode_run_time[0] + ' Min' || 'N/A' }} </span>
           </div>
           <div class="flex items-center justify-center text-center gap-1 px-2">
             <ion-icon name="film"></ion-icon>
@@ -58,16 +56,19 @@
         </div>
         <div class="px-4 py-2 mt-2">
           <h4 class="font-bold text-lg mb-2">Overview</h4>
-          <p class="text-opacity-80" [ngClass]="{'line-clamp-3': !opened}">{{vm.details?.overview}}</p>
-          <ion-button expand="block" fill="clear" (click)="opened = !opened">
-            <span>{{opened ? 'See less' : 'See more'}}</span>
-            <ion-icon [name]="opened ? 'chevron-up' : 'chevron-down'" slot="end"></ion-icon>
+          <p class="text-opacity-80"
+             [ngClass]="{'line-clamp-3': (detailsStore.opened$ | async) === false}">{{vm.details?.overview}}</p>
+          <ion-button expand="block" fill="clear" (click)="detailsStore.toggleOpened()">
+            <span>{{(detailsStore.opened$ | async) === true ? 'See less' : 'See more'}}</span>
+            <ion-icon [name]="(detailsStore.opened$ | async) === true ? 'chevron-up' : 'chevron-down'"
+                      slot="end"></ion-icon>
           </ion-button>
         </div>
         <div class="px-4 py-2">
           <h4 class="font-bold text-lg mb-2">Cast</h4>
           <div class="flex flex-nowrap items-center snap-x overflow-auto gap-4">
-            <div *ngFor="let cast of vm.details?.credits.cast" class="shrink-0 flex items-center gap-2 snap-start" (click)="openPersonDetails(cast)">
+            <div *ngFor="let cast of vm.details?.credits.cast" class="shrink-0 flex items-center gap-2 snap-start"
+                 (click)="openPersonDetails(cast)">
               <img *ngIf="cast.profile_path" [src]="cast.profile_path| tmdbImage:'w185'" [alt]="cast.name"
                    class="w-10 h-10 rounded-full object-cover">
               <ion-icon *ngIf="!cast.profile_path" name="person-circle" class="text-3xl"></ion-icon>
@@ -90,12 +91,17 @@
         <div class="px-4 py-2 mb-8" *ngIf="vm.details?.images.backdrops.length">
           <h4 class="font-bold text-lg mb-2">Gallery</h4>
           <div class="flex overflow-y-auto flex-nowrap snap-x ion-text-md-center gap-4">
-            <img (click)="openImage(vm.details?.images.backdrops, index)" *ngFor="let poster of vm.details?.images.backdrops; let index = index" class="aspect-video shrink-0 shadow rounded"
+            <img (click)="openImage(vm.details?.images.backdrops, index)"
+                 *ngFor="let poster of vm.details?.images.backdrops; let index = index"
+                 class="aspect-video shrink-0 shadow rounded"
                  [src]="poster.file_path | tmdbImage: 'w780'" loading="lazy"/>
           </div>
         </div>
       </ng-container>
       <ng-template #loading>
+        <div class="ion-padding">
+          <ion-skeleton-text animated class="h-40"></ion-skeleton-text>
+        </div>
         <div class="flex justify-center items-center text-gray-400 py-4 text-sm gap-4">
           <ion-skeleton-text animated class="w-20 h-4 rounded"></ion-skeleton-text>
           <ion-skeleton-text animated class="w-20 h-4 rounded"></ion-skeleton-text>

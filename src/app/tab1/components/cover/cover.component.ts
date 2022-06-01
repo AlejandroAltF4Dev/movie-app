@@ -21,7 +21,7 @@ export class CoverComponent implements OnInit {
 
   get bgImg() {
     return this.sanitizer.bypassSecurityTrustResourceUrl(
-      `url('${this.tmdbImagePipe.transform(this.item?.poster_path, 'w780')}')`
+      `url('${this.tmdbImagePipe.transform(this.item?.backdrop_path, 'w780')}')`
     );
   }
 
