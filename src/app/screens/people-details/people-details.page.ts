@@ -1,10 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { TmdbService } from '../../services/tmdb.service';
-import { IonModal, ModalController } from '@ionic/angular';
-import { PhotoViewerComponent } from '../../photo-viewer/photo-viewer/photo-viewer.component';
-import { TmdbImagePipe } from '../../services/tmdb-image.pipe';
-import { DetailsPage } from '../details/details.page';
-import { DetailsStore } from '../store/details.store';
+import {Component, Input, OnInit} from '@angular/core';
+import {TmdbService} from '../../services/tmdb.service';
+import {IonModal, ModalController} from '@ionic/angular';
+import {PhotoViewerComponent} from '../../photo-viewer/photo-viewer/photo-viewer.component';
+import {TmdbImagePipe} from '../../services/tmdb-image.pipe';
+import {DetailsPage} from '../details/details.page';
+import {DetailsStore} from '../store/details.store';
 
 @Component({
   selector: 'app-people-details',
@@ -15,19 +15,23 @@ import { DetailsStore } from '../store/details.store';
 export class PeopleDetailsPage implements OnInit {
   @Input() personId: any;
   modal: IonModal;
+
   constructor(
     private tmdbService: TmdbService,
     private modalController: ModalController,
     public detailsStore: DetailsStore,
     private tmdbImagePipe: TmdbImagePipe
-  ) {}
+  ) {
+  }
 
   ngOnInit() {
-    this.detailsStore.getDetails({ type: 'person', id: this.personId });
+    this.detailsStore.getDetails({type: 'person', id: this.personId});
   }
+
   async dismiss() {
     await this.modal.dismiss();
   }
+
   async openImage(posters: any[], index: number) {
     const modal = await this.modalController.create({
       component: PhotoViewerComponent,
@@ -48,8 +52,8 @@ export class PeopleDetailsPage implements OnInit {
     const modal = await this.modalController.create({
       component: DetailsPage,
       componentProps: details,
-      /*  presentingElement: this.ionRouterOutlet.nativeEl,
-        swipeToClose: true*/
+      presentingElement: this.modal.presentingElement,
+      swipeToClose: true
     });
     return await modal.present();
   }

@@ -1,24 +1,23 @@
+<ion-header>
+  <ion-toolbar class="custom-header" >
+    <ion-title>
+      <ng-container *ngIf="detailsStore.title$ | async as name; else loadingTitle">
+        <span>{{name}}</span>
+      </ng-container>
+      <ng-template #loadingTitle>
+        <ion-skeleton-text class="w-40 h-8" [animated]="true"></ion-skeleton-text>
+      </ng-template>
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismiss()">
+        <ion-icon name="close" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
 <ion-content>
   <ng-container *ngIf="{details: detailsStore.details$ | async} as vm">
     <div class="relative">
-      <div class="fixed inset-x-0 z-20">
-        <ion-toolbar class="custom-header" >
-          <ion-title>
-            <ng-container *ngIf="detailsStore.title$ | async as name; else loadingTitle">
-              <span>{{name}}</span>
-            </ng-container>
-            <ng-template #loadingTitle>
-              <ion-skeleton-text class="w-40 h-8" [animated]="true"></ion-skeleton-text>
-            </ng-template>
-          </ion-title>
-          <ion-buttons slot="end">
-            <ion-button (click)="dismiss()">
-              <ion-icon name="close" slot="icon-only"></ion-icon>
-            </ion-button>
-          </ion-buttons>
-        </ion-toolbar>
-      </div>
-
       <ng-container *ngIf="vm.details; else loading">
         <div class="relative">
           <img [src]="vm.details?.profile_path | tmdbImage" alt="">

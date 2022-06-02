@@ -1,6 +1,9 @@
 <ion-header [translucent]="true">
-  <ion-searchbar animated enterkeyhint="search" inputmode="search" (ionChange)="search($event)"
-                 type="name"></ion-searchbar>
+  <ion-toolbar>
+    <ion-searchbar animated enterkeyhint="search" inputmode="search" (ionChange)="search($event)"
+                   type="name"></ion-searchbar>
+  </ion-toolbar>
+
 </ion-header>
 
 <ion-content [fullscreen]="true" class="ion-padding">
@@ -9,7 +12,7 @@
       <div class="grid grid-cols-2 gap-4">
         <ion-text class="col-span-2" color="primary">Results:</ion-text>
         <ng-container *ngFor="let item of vm.results">
-         <app-search-item-card [item]="item"></app-search-item-card>
+         <app-search-item-card [item]="item" (details)="openDetailsModal($event)"></app-search-item-card>
         </ng-container>
       </div>
     </ng-container>

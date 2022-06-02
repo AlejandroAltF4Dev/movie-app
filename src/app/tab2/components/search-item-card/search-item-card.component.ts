@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { DetailsPage } from '../../../screens/details/details.page';
 import { PeopleDetailsPage } from '../../../screens/people-details/people-details.page';
@@ -10,19 +10,13 @@ import { PeopleDetailsPage } from '../../../screens/people-details/people-detail
 })
 export class SearchItemCardComponent implements OnInit {
   @Input() item: any;
+  @Output() details = new EventEmitter();
   constructor(private modalController: ModalController) {}
 
   ngOnInit() {}
 
-  async openDetails(item: any) {
-    const componentProps = {
-      type: item.media_type,
-      [item.media_type === 'person' ? 'personId' : 'id']: item.id,
-    };
-    const modal = await this.modalController.create({
-      component: item.media_type === 'person' ? PeopleDetailsPage : DetailsPage,
-      componentProps,
-    });
-    return modal.present();
+  openDetails(item: any) {
+    this.details.emit(item);
+
   }
 }

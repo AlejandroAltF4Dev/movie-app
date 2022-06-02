@@ -39,6 +39,8 @@ export class DetailsPage implements OnInit {
   async openImage(posters: any[], index: number) {
     const modal = await this.modalController.create({
       component: PhotoViewerComponent,
+      presentingElement: this.modal.presentingElement,
+      swipeToClose: true,
       componentProps: {
         data: {
           posters: posters.map((poster, i) => ({
@@ -55,6 +57,8 @@ export class DetailsPage implements OnInit {
   async openPersonDetails(cast: any) {
     const modal = await this.modalController.create({
       component: PeopleDetailsPage,
+      presentingElement: this.modal.presentingElement,
+      swipeToClose: true,
       componentProps: {
         personId: cast.id,
       },
@@ -65,6 +69,8 @@ export class DetailsPage implements OnInit {
   async openPremiumModal() {
     const modal = await this.modalController.create({
       component: PremiumPage,
+      presentingElement: this.modal.presentingElement,
+      swipeToClose: true,
     });
     return modal.present();
   }
