@@ -1,10 +1,10 @@
-import {Component, OnInit} from '@angular/core';
-import {TmdbService} from '../services/tmdb.service';
-import {delay, map} from 'rxjs/operators';
-import {Observable} from 'rxjs';
-import {IonRouterOutlet, ModalController} from '@ionic/angular';
-import {DetailsPage} from '../screens/details/details.page';
-import {PremiumPage} from '../screens/premium/premium.page';
+import { Component, OnInit } from '@angular/core';
+import { TmdbService } from '../services/tmdb.service';
+import { delay, map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { IonRouterOutlet, ModalController } from '@ionic/angular';
+import { DetailsPage } from '../screens/details/details.page';
+import { PremiumPage } from '../screens/premium/premium.page';
 
 @Component({
   selector: 'app-tab1',
@@ -21,27 +21,17 @@ export class Tab1Page implements OnInit {
     private tmdbService: TmdbService,
     public modalController: ModalController,
     private ionRouterOutlet: IonRouterOutlet
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
     this.categories$ = this.tmdbService.movieCategories();
     this.trendingMovies$ = this.tmdbService.trending('movie').pipe(
-      /*
-            delay(3000),
-      */
       map((movies: any) => {
         this.mainMovie = movies.shift();
         return movies;
       })
     );
-    this.trendingTv$ = this.tmdbService
-      .trending('tv')
-      .pipe
-      /*
-            delay(3000)
-      */
-      ();
+    this.trendingTv$ = this.tmdbService.trending('tv');
   }
 
   async openDetails(details: { type: 'movie' | 'tv'; id: string }) {
@@ -49,7 +39,7 @@ export class Tab1Page implements OnInit {
       component: DetailsPage,
       componentProps: details,
       presentingElement: this.ionRouterOutlet.nativeEl,
-      swipeToClose: true
+      swipeToClose: true,
     });
     return await modal.present();
   }
@@ -58,7 +48,7 @@ export class Tab1Page implements OnInit {
     const modal = await this.modalController.create({
       component: PremiumPage,
       presentingElement: this.ionRouterOutlet.nativeEl,
-      swipeToClose: true
+      swipeToClose: true,
     });
     return await modal.present();
   }
