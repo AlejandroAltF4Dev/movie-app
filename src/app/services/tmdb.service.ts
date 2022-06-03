@@ -9,6 +9,7 @@ import { pluck } from 'rxjs/operators';
 export class TmdbService {
   endpoint = environment.tmdbUrl;
   defaultParams = {
+    // eslint-disable-next-line @typescript-eslint/naming-convention
     api_key: environment.tmdbApiToken,
     language: 'en-US',
   };
@@ -44,7 +45,9 @@ export class TmdbService {
       params: new HttpParams({
         fromObject: {
           ...this.defaultParams,
+          // eslint-disable-next-line @typescript-eslint/naming-convention
           append_to_response: 'videos,credits,images',
+          // eslint-disable-next-line @typescript-eslint/naming-convention
           include_image_language: 'es,en,null',
         },
       }),

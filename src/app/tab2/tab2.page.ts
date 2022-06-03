@@ -1,8 +1,12 @@
 import { Component } from '@angular/core';
-import {IonRouterOutlet, ModalController, SearchbarCustomEvent} from '@ionic/angular';
+import {
+  IonRouterOutlet,
+  ModalController,
+  SearchbarCustomEvent,
+} from '@ionic/angular';
 import { SearchStore } from './search.store';
-import {PeopleDetailsPage} from "../screens/people-details/people-details.page";
-import {DetailsPage} from "../screens/details/details.page";
+import { PeopleDetailsPage } from '../screens/people-details/people-details.page';
+import { DetailsPage } from '../screens/details/details.page';
 
 @Component({
   selector: 'app-tab2',
@@ -14,7 +18,7 @@ export class Tab2Page {
   constructor(
     public searchStore: SearchStore,
     private ionRouterOutlet: IonRouterOutlet,
-    public modalController: ModalController,
+    public modalController: ModalController
   ) {}
 
   search({ detail: { value } }: SearchbarCustomEvent) {
