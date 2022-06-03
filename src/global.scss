@@ -36,3 +36,6 @@ html {
   --opacity: .5;
   @apply backdrop-blur;
 }
+.error-message{
+  @apply text-sm text-red-500
+}
