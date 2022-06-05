@@ -10,8 +10,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { ListPipe } from './services/list.pipe';
 import { YoutubeUrlPipe } from './services/youtube-url.pipe';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { LoginComponent } from './screens/login/login.component';
-import { SignUpComponent } from './screens/sign-up/sign-up.component';
+import { LoginComponent } from './shared/modals/login/login.component';
+import { SignUpComponent } from './shared/modals/sign-up/sign-up.component';
 
 @NgModule({
   declarations: [
